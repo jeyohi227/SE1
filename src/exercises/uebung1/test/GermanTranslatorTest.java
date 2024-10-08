@@ -1,9 +1,9 @@
 package exercises.uebung1.test;
 
-import org.hbrs.se1.ws24.exercises.uebung1.control.GermanTranslator;
-import org.hbrs.se1.ws24.exercises.uebung1.view.Client;
-import org.junit.jupiter.api.Test;
+import exercises.uebung1.control.GermanTranslator;
+import exercises.uebung1.view.Client;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GermanTranslatorTest {
