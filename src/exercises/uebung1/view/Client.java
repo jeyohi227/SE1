@@ -13,6 +13,12 @@ public class Client {
 		 */
 		private String terminal;
 
+		private Translator translator;
+
+		public void setTranslator(Translator translator) {
+			this.translator = translator;
+		}
+
 		 void display( int aNumber ){
 			// In dieser Methode soll die Methode translateNumber
 			// mit dem übergegebenen Wert der Variable aNumber
