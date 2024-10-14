@@ -1,4 +1,4 @@
-package exercises.uebung2;
+package exercises.uebung2.control.interfaces;
 public interface Member {
 
     /**
