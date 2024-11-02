@@ -1,4 +1,4 @@
-package exercises.uebung3;
+package exercises.uebung3.control.persistence;
 
 import java.util.List;
 

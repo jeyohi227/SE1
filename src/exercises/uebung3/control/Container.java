@@ -1,29 +1,39 @@
-package exercises.uebung3;
+package exercises.uebung3.control;
+
 import exercises.uebung2.control.ConcreteMember;
 import exercises.uebung2.control.Exception.ContainerException;
+import exercises.uebung3.control.persistence.PersistenceException;
+import exercises.uebung3.control.persistence.PersistenceStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class Container {
 
-    private static boolean alreadyexist = false;
+    private static Container container;
 
-   private ArrayList<ConcreteMember> membersClub;
+    // Reference to the internal strategy (e.g. MongoDB or Stream)
+    private PersistenceStrategy strategy = null;
+
+    private List membersClub = new ArrayList<ConcreteMember>();
     /**
      * Hilfsliste: speichert die ID der Members im membersClub ab
      * Wieso? -> Liste mit allen Primary Keys:
      * Entscheidend für Methoden addMember() und deleteMember()
      */
-    private ArrayList<Integer> membersID;
+    private ArrayList<Integer> membersID = new ArrayList<>();
 
     private int size = 0; //Größe der Liste membersClub
 
-    public Container() {
-        if(!alreadyexist) {
-            alreadyexist = true;
-            this.membersClub = new ArrayList<>();
-            this.membersID = new ArrayList<>();
+    private Container() {
+    }
+
+    public static Container getInstance() {
+        if (container == null) {
+            container = new Container();
         }
+        return container;
     }
 
     public void addMember(ConcreteMember member) {
@@ -63,7 +73,7 @@ public class Container {
             throw new NullPointerException("übergebende ID is null");
 
         if(membersID.contains(ID)) {
-            ConcreteMember member = membersClub.get(membersID.indexOf(ID));
+            Object member = membersClub.get(membersID.indexOf(ID));
             membersClub.remove(member);
             membersID.remove(ID);
             size--;
@@ -80,22 +90,55 @@ public class Container {
          */
     }
 
-    public void dump() {
-        for(ConcreteMember member : membersClub) {
-            System.out.println(member);
-        }
-    }
-
     public int size() {
         return size;
     }
 
+    // Method for loading Objects. Uses the internally stored strategy object
+    // @throws PersistenceException
     public void load() throws PersistenceException {
+        if(this.strategy == null){
+            throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet
+            , "Strategy not initialized");
+        }
 
+        try {
+            List<Member> liste = this.strategy.load();
+            this.membersClub = liste;
+        } catch(java.lang.UnsupportedOperationException e) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable
+            ,"MongoDB is not implemented!");
+        }
     }
 
+    public void setPersistenceStrategy(PersistenceStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    /**
+     * Method for storing objects, Uses gne internally stored strategy object
+     * @throws PersistenceException
+     */
     public void store() throws PersistenceException {
         //speichert Member in der membersclub ab
+        if(this.strategy == null){
+            throw new PersistenceException(PersistenceException.ExceptionType.NoStrategyIsSet
+            , "Strategy not initialized");
+        }
 
+        try {
+            this.strategy.save(this.membersClub);
+        } catch(java.lang.UnsupportedOperationException e) {
+            throw new PersistenceException(PersistenceException.ExceptionType.ImplementationNotAvailable
+            , "MongoDB is not implemented!");
+        }
+    }
+
+    /**
+     * Methode zum Löschen aller Member-Ojekte
+     * @throws PersistenceException
+     */
+    public void deleteAllMembers() throws PersistenceException {
+        this.membersClub.clear();
     }
 }

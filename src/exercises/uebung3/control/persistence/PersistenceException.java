@@ -1,4 +1,4 @@
-package exercises.uebung3;
+package exercises.uebung3.control.persistence;
 
 public class PersistenceException extends Exception {
 
@@ -22,6 +22,11 @@ public class PersistenceException extends Exception {
      * of Type 'ImplementationNotAvailable'. Re-throw the new exception e.g. to a client
      */
     public enum ExceptionType {
-        ImplementationNotAvailable, ConnectionNotAvailable, NoStrategyIsSet
+        ImplementationNotAvailable,
+        ConnectionNotAvailable,
+        NoStrategyIsSet,
+        SaveFailure,
+        LoadFailure,
+        ClosingFailure
     }
 }
