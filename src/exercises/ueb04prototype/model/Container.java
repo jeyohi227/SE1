@@ -1,11 +1,8 @@
-package exercises.ueb04prototype;
+package exercises.ueb04prototype.model;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 /*
  * Klasse zum Management sowie zur Eingabe und Ausgabe von User-Stories.
@@ -53,14 +50,16 @@ public class Container {
      * Vorschriftsmäßiges Ueberschreiben des Konstruktors (private) gemaess Singleton-Pattern (oder?)
      * Nun auf private gesetzt! Vorher ohne Access Qualifier (--> dann package-private)
      */
-    public Container(){
+    private Container(){
         liste = new ArrayList<UserStory>();
     }
 
-    /**
+    /*
      * Start-Methoden zum Starten des Programms
      * (hier koennen ggf. weitere Initialisierungsarbeiten gemacht werden spaeter)
      */
+    // main Methode
+    /*
     public static void main (String[] args) throws Exception {
         // kommt in die virtuelle Maschine, -> schlimmste Programmuerkunst
         // die Exception muss vorher behandelt werden
@@ -69,11 +68,15 @@ public class Container {
         con.startEingabe();
     }
 
+     */
+
     /*
      * Diese Methode realisiert eine Eingabe ueber einen Scanner
      * Alle Exceptions werden an den aufrufenden Context (hier: main) weitergegeben (throws)
      * Das entlastet den Entwickler zur Entwicklungszeit und den Endanwender zur Laufzeit
      */
+    //startEingabe()
+    /*
     public void startEingabe() throws ContainerException, Exception {
         String strInput = null;
 
@@ -91,9 +94,7 @@ public class Container {
 
             // Extrahiert ein Array aus der Eingabe
             String[] strings = strInput.split(" ");
-            /*
-             *
-             */
+
 
             // 	Falls 'help' eingegeben wurde, werden alle Befehle ausgedruckt
             if ( strings[0].equals("help") ) {
@@ -124,10 +125,13 @@ public class Container {
             }
         } // Ende der Schleife
     }
+    */
 
-    /**
+    /*
      * Diese Methode realisiert die Ausgabe.
      */
+    // startAusgabe()
+    /*
     public void startAusgabe() {
 
         // Hier möchte Herr P. die Liste mit einem eigenen Sortieralgorithmus sortieren und dann
@@ -146,12 +150,10 @@ public class Container {
         //  (Filterung Projekt = "ein Wert (z.B. Coll@HBRS)" und z.B. Prio >=3
         //  Todo: Implementierung Filterung mit Lambda (F5)
 
-        String project = "Coll@HBRS";
-        List<UserStory> newListe =
-                this.liste.stream()
-                        .filter( userStory -> userStory.getProject().equals(project))
-                        .collect(Collectors.toList());
+
     }
+
+     */
 
     /*
      * Methode zum Speichern der Liste. Es wird die komplette Liste
