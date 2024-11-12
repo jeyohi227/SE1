@@ -1,4 +1,7 @@
-package exercises.ueb04prototype.model;
+package exercises.uebung4.model;
+
+import exercises.uebung4.model.exception.ContainerException;
+import exercises.uebung4.model.interfaces.hasID;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -23,10 +26,10 @@ import java.util.List;
  *
  */
 
-public class Container {
+public class Container<T extends hasID> {
 
     // Interne ArrayList zur Abspeicherung der Objekte vom Type UserStory
-    private List<UserStory> liste = null;
+    private List<T> liste = null;
 
     // Statische Klassen-Variable, um die Referenz
     // auf das einzige Container-Objekt abzuspeichern
@@ -51,114 +54,12 @@ public class Container {
      * Nun auf private gesetzt! Vorher ohne Access Qualifier (--> dann package-private)
      */
     private Container(){
-        liste = new ArrayList<UserStory>();
+        liste = new ArrayList<>();
     }
-
-    /*
-     * Start-Methoden zum Starten des Programms
-     * (hier koennen ggf. weitere Initialisierungsarbeiten gemacht werden spaeter)
-     */
-    // main Methode
-    /*
-    public static void main (String[] args) throws Exception {
-        // kommt in die virtuelle Maschine, -> schlimmste Programmuerkunst
-        // die Exception muss vorher behandelt werden
-        // ToDo: Bewertung Exception-Handling (F3, F7)
-        Container con = Container.getInstance();
-        con.startEingabe();
-    }
-
-     */
-
-    /*
-     * Diese Methode realisiert eine Eingabe ueber einen Scanner
-     * Alle Exceptions werden an den aufrufenden Context (hier: main) weitergegeben (throws)
-     * Das entlastet den Entwickler zur Entwicklungszeit und den Endanwender zur Laufzeit
-     */
-    //startEingabe()
-    /*
-    public void startEingabe() throws ContainerException, Exception {
-        String strInput = null;
-
-        // Initialisierung des Eingabe-View
-        // ToDo: Funktionsweise des Scanners erklären (F3)
-        Scanner scanner = new Scanner( System.in );
-
-        // Ausgabe eines Texts zur Begruessung
-        System.out.println("UserStory-Tool V1.0 by Julius P. (dedicated to all my friends)");
-
-        while ( true ) {
-
-            System.out.print( "> "  );
-            strInput = scanner.nextLine();
-
-            // Extrahiert ein Array aus der Eingabe
-            String[] strings = strInput.split(" ");
-
-
-            // 	Falls 'help' eingegeben wurde, werden alle Befehle ausgedruckt
-            if ( strings[0].equals("help") ) {
-                System.out.println("Folgende Befehle stehen zur Verfuegung: help, dump....");
-            }
-            // Auswahl der bisher implementierten Befehle:
-            if ( strings[0].equals("dump") ) {
-                startAusgabe();
-            }
-            // Auswahl der bisher implementierten Befehle:
-            if ( strings[0].equals("enter") ) {
-                // Daten einlesen ... (Ihre Aufgabe!)
-                // this.addUserStory( new UserStory( data ) ) um das Objekt in die Liste einzufügen.
-            }
-
-            if (  strings[0].equals("store")  ) {
-                // Beispiel-Code zum Anlegen und Speichern einer UserStory:
-                UserStory userStory = new UserStory();
-                userStory.setId( 22 );
-                this.addUserStory( userStory );
-                this.store();
-            }
-
-            if (strings[0].equals("exit") ) {
-                System.out.println("Anwendung wurde verlassen");
-                scanner.close();
-                return;
-            }
-        } // Ende der Schleife
-    }
-    */
-
-    /*
-     * Diese Methode realisiert die Ausgabe.
-     */
-    // startAusgabe()
-    /*
-    public void startAusgabe() {
-
-        // Hier möchte Herr P. die Liste mit einem eigenen Sortieralgorithmus sortieren und dann
-        // ausgeben. Allerdings weiss der Student hier nicht weiter!
-
-        // [Sortierung ausgelassen]
-        // Todo: Implementierung Sortierung (F4)
-
-        // Klassische Ausgabe ueber eine For-Each-Schleife
-        for (UserStory story : liste) {
-            System.out.println(story.toString());
-        }
-
-        //  [Variante mit forEach-Methode / Streams (--> Lösung Übung Nr. 2)?
-        //  Gerne auch mit Beachtung der neuen US1
-        //  (Filterung Projekt = "ein Wert (z.B. Coll@HBRS)" und z.B. Prio >=3
-        //  Todo: Implementierung Filterung mit Lambda (F5)
-
-
-    }
-
-     */
 
     /*
      * Methode zum Speichern der Liste. Es wird die komplette Liste
      * inklusive ihrer gespeicherten UserStory-Objekte gespeichert.
-     *
      */
     public void store() throws ContainerException {
         ObjectOutputStream oos = null;
@@ -181,7 +82,6 @@ public class Container {
     /*
      * Methode zum Laden der Liste. Es wird die komplette Liste
      * inklusive ihrer gespeicherten UserStory-Objekte geladen.
-     *
      */
     public void load() {
         ObjectInputStream ois = null;
@@ -211,31 +111,18 @@ public class Container {
 
     /**
      * Methode zum Hinzufügen eines Mitarbeiters unter Wahrung der Schlüsseleigenschaft
-     * @param userStory
+     * @param
      * @throws ContainerException
      */
-    public void addUserStory ( UserStory userStory ) throws ContainerException {
-        if ( contains(userStory) == true ) {
+    public void addUserStory ( T element ) throws ContainerException {
+        if ( liste.contains(element) == true ) {
             ContainerException ex = new ContainerException("ID bereits vorhanden!");
             throw ex;
         }
-        liste.add(userStory);
+        liste.add(element);
     }
 
-    /**
-     * Prüft, ob eine UserStory bereits vorhanden ist
-     * @param userStory
-     * @return
-     */
-    private boolean contains( UserStory userStory) {
-        int ID = userStory.getId();
-        for ( UserStory userStory1 : liste) {
-            if ( userStory1.getId() == ID ) {
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     /**
      * Ermittlung der Anzahl von internen UserStory
@@ -251,7 +138,7 @@ public class Container {
      * Findet aktuell keine Anwendung bei Hr. P.
      * @return
      */
-    public List<UserStory> getCurrentList() {
+    public List<T> getCurrentList() {
         return this.liste;
     }
 
@@ -260,13 +147,16 @@ public class Container {
      * @param id
      * @return
      */
+    /*
     private UserStory getUserStory(int id) {
-        for ( UserStory userStory : liste) {
-            if (id == userStory.getId() ){
+        for ( T userStory : liste) {
+            if (id == userStory.getID() ){
                 return userStory;
             }
         }
         return null;
     }
+
+     */
 
 }

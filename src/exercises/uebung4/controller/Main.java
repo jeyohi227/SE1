@@ -1,7 +1,7 @@
-package exercises.ueb4.ueb04prototype.controller;
+package exercises.uebung4.controller;
 
 
-import exercises.ueb4.ueb04prototype.model.Container;
+import exercises.uebung4.model.Container;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package exercises.ueb4.ueb04prototype.model.exception;
+package exercises.uebung4.model.exception;
 
 public class ContainerException extends Exception {
 

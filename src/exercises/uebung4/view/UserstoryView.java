@@ -1,7 +1,7 @@
-package exercises.ueb04prototype.view;
+package exercises.uebung4.view;
 
 
-import exercises.ueb04prototype.model.UserStory;
+import exercises.uebung4.model.UserStory;
 
 import java.util.Collections;
 import java.util.List;

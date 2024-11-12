@@ -1,10 +1,10 @@
-package exercises.ueb4.ueb04prototype.controller;
+package exercises.uebung4.controller;
 
 
-import exercises.ueb4.ueb04prototype.model.Container;
-import exercises.ueb4.ueb04prototype.model.exception.ContainerException;
-import exercises.ueb4.ueb04prototype.model.UserStory;
-import exercises.ueb4.ueb04prototype.view.UserstoryView;
+import exercises.uebung4.model.Container;
+import exercises.uebung4.model.exception.ContainerException;
+import exercises.uebung4.model.UserStory;
+import exercises.uebung4.view.UserstoryView;
 
 import java.util.Scanner;
 
@@ -50,14 +50,13 @@ public class InputDialog {
             //Auswahl der bisher implementierten Befehle:
             String suchParameter = null;
             if(strings[0].equals("dump")){
-                /*
+
                 try{
                     suchParameter = strings[1];
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println("Projekt fehlt");
                 }
-                 */
-                suchParameter = strings[1];
+
                 UserstoryView view = new UserstoryView();
                 view.startAusgabe(this.container.getCurrentList(), suchParameter);
             }

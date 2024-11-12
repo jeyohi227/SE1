@@ -1,8 +1,10 @@
-package exercises.ueb04prototype.model;
+package exercises.uebung4.model;
+
+import exercises.uebung4.model.interfaces.hasID;
 
 import java.io.Serializable;
 
-public class UserStory implements Comparable<UserStory>, Serializable {
+public class UserStory implements Comparable<UserStory>, Serializable, hasID {
     // ToDo: Sind die Attribute der Klasse UserStory vollständig? Wie sieht es mit den
     //  Sichtbarkeiten aus? (F4)
     //-> Sind nur im jeweiligen Package sichtbar
@@ -50,7 +52,8 @@ public class UserStory implements Comparable<UserStory>, Serializable {
     public void setAkzeptanzkriterium(String akzeptanzkriterium) {
         this.akzeptanzkriterium = akzeptanzkriterium;
     }
-    public int getId() {
+    @Override
+    public int getID() {
         return id;
     }
     public void setId(int id) {
